@@ -10,6 +10,7 @@ import UIKit
 class ReminderListViewController: UICollectionViewController {
    
     var dataSource: DataSource!
+    var reminders: [Reminder] = Reminder.sampleData /// using it for snapshots to get id's
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,15 +20,15 @@ class ReminderListViewController: UICollectionViewController {
         
         let cellRegistration = UICollectionView.CellRegistration(handler: cellRegistrationHandler)
         
-        dataSource = DataSource(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
+        dataSource = DataSource(collectionView: collectionView) { (collectionView: UICollectionView, indexPath: IndexPath, itemIdentifier: Reminder.ID) in
             return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: itemIdentifier)
         }
         
         // Snapshot
         var snapshot = Snapshot()
         snapshot.appendSections([0]) /// adding a single section.
-        /// Create a new array containing only the reminder titles, and append the titles as items in the snapshot.
-        snapshot.appendItems(Reminder.sampleData.map { (item) -> String in item.title })
+        /// Create a new array containing only the reminder id, and append the id's to the snapshot.
+        snapshot.appendItems(reminders.map { (item) -> String in item.id })
         dataSource.apply(snapshot) /// Apply the snapshot to the data source. Applying the snapshot reflects the changes in the user interface.
         
         // Assign the data source to the collection view.
