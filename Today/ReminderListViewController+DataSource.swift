@@ -23,6 +23,7 @@ extension ReminderListViewController {
         /// Change the secondary text’s font to .caption1.
         ourContentConfiguration.secondaryTextProperties.font = UIFont.preferredFont(forTextStyle: .caption1)
         
+        
         // Setting the configuration
         cell.contentConfiguration = ourContentConfiguration
         
